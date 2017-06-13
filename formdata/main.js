@@ -78,19 +78,31 @@ var formData = [
   }
 ];
 
-/* START HERE */
+var fields = document.querySelector('.fields');
 
-// Sample of how to loop over the formData
-for(let i=0; i<formData.length; i++){
-
-  // Check your dev tools console for what the items in formData have
-  console.log(formData[i])
-
-  // Creating a form input and setting the type and placeholder attributes
-  let input = document.createElement("input")
-  input.type = formData[i].type
-  input.placeholder = formData[i].label
-
-  // Append to the body. You'll want to append somewhere else
-  document.body.appendChild(input)
+for (let i = 0; i < formData.length; i++) {
+  if (formData[i].type === 'select') {
+    var select = document.createElement('select');
+    select.placeholder = formData[i].label;
+    select.id = formData[i].id;
+    select.icon = formData[i].icon;
+    fields.appendChild(select)
+    var placeHolder = document.createElement('option')
+    placeHolder.selected = 'selected';
+    placeHolder.innerHTML = 'Select language...'
+    select.appendChild(placeHolder)
+    for (let s = 0; s < formData[i].options.length; s++) {
+      var ops = document.createElement('option');
+      ops.label = formData[i].options[s].label;
+      ops.value = formData[i].options[s].value;
+      select.appendChild(ops);
+    }
+  } else {
+    var input = document.createElement('input');
+    input.type = formData[i].type;
+    input.placeholder = formData[i].label;
+    input.id = formData[i].id;
+    input.icon = formData[i].icon;
+    fields.appendChild(input);
+  }
 }
